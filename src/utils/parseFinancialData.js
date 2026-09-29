@@ -25,7 +25,8 @@ export function extractBills(text) {
   // Match both formatted and unformatted bills:
   // "Freedom Mortgage: $2,094.68 (20.2% of income)"
   // "* **Freedom Mortgage**: **$2,094.68**"
-  const billRegex = /[*]*\s*[*]*([a-zA-Z\s]+?)[*]*\s*:\s*[*]*\$([0-9,.]+)[*]*(?:\s+due\s+([^*]+))?(?:\s*\(([^)]+)\))?/gi;
+  // "American Express (Credit Card Payment): $1,850.00 due September 16 (Status: PAID)"
+  const billRegex = /[*]*\s*[*]*([a-zA-Z0-9\s\-&/]+?)(?:\s*\([^)]+\))?[*]*\s*:\s*[*]*\$([0-9,.]+)[*]*(?:\s+due\s+([^(\n]+?))?(?:\s*\(([^)]+)\))?/gi;
   let match;
 
   while ((match = billRegex.exec(text)) !== null) {
