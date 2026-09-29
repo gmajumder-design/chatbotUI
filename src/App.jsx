@@ -180,7 +180,7 @@ function App() {
               <div className="header-logo-pulse" />
             </div>
             <div className="header-text">
-              <h1 className="header-title">True Harbor Assistant</h1>
+              <h1 className="header-title">TrueHarbor Assistant</h1>
               <div className="header-status">
                 <div className="status-indicator" />
                 <span>Online</span>
