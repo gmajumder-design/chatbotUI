@@ -78,12 +78,59 @@ function App() {
       const data = await response.json();
 
       if (data.status === 'success' || data.bot_response) {
+        let rawText = data.bot_response || "I processed your request but didn't receive a formatted response.";
+        let extractedChartData = data.chart_data || null;
+        
+        // --- Generative UI: Clean up LLM hallucinations where JSON leaks into markdown ---
+        try {
+          // 1. Check for markdown JSON blocks
+          const mdRegex = /```(?:json)?\s*(\{[\s\S]*?\})\s*```/g;
+          let match;
+          while ((match = mdRegex.exec(rawText)) !== null) {
+            const parsed = JSON.parse(match[1]);
+            if (parsed.chart_data) {
+              extractedChartData = parsed.chart_data;
+              rawText = rawText.replace(match[0], '');
+            } else if (parsed.labels && parsed.datasets) {
+              extractedChartData = parsed;
+              rawText = rawText.replace(match[0], '');
+            }
+          }
+          
+          // 2. Check for raw unformatted JSON in the text
+          if (!extractedChartData && rawText.includes('"chart_data"')) {
+            const startIndex = rawText.indexOf('{');
+            const endIndex = rawText.lastIndexOf('}');
+            if (startIndex !== -1 && endIndex !== -1 && endIndex > startIndex) {
+              const potentialJson = rawText.substring(startIndex, endIndex + 1);
+              try {
+                const parsed = JSON.parse(potentialJson);
+                if (parsed.chart_data) {
+                  extractedChartData = parsed.chart_data;
+                  rawText = rawText.replace(potentialJson, '');
+                } else if (parsed.labels && parsed.datasets) {
+                  extractedChartData = parsed;
+                  rawText = rawText.replace(potentialJson, '');
+                }
+              } catch (e) {
+                 // Try a more constrained match if the last '}' was part of text
+                 const strictMatch = rawText.match(/\{\s*"chart_data"\s*:[\s\S]*\}\s*\}/);
+                 if (strictMatch) {
+                    const parsed = JSON.parse(strictMatch[0]);
+                    extractedChartData = parsed.chart_data;
+                    rawText = rawText.replace(strictMatch[0], '');
+                 }
+              }
+            }
+          }
+        } catch (e) {}
+
         const botMsg = {
           id: `bot-${Date.now()}`,
           sender: 'bot',
-          text: data.bot_response || "I processed your request but didn't receive a formatted response.",
+          text: rawText.trim(),
           suggestions: (data.suggested_questions || []).map(q => ({ text: q, icon: '💬' })),
-          chartData: data.chart_data || null,
+          chartData: extractedChartData,
           timestamp: new Date(),
         };
         setMessages(prev => [...prev, botMsg]);
