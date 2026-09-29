@@ -4,6 +4,7 @@ import BillsGrid from './BillsGrid';
 import FinancialCharts from './FinancialCharts';
 import BurnRateGauge from './BurnRateGauge';
 import FinancialHealthScore from './FinancialHealthScore';
+import GenerativeBudgetFlow from './GenerativeBudgetFlow';
 
 /**
  * GenerativeResponse — The main orchestrator for Generative UI.
@@ -23,6 +24,7 @@ export default function GenerativeResponse({ text, chartData }) {
   // Determine if we should show the health score
   // Show it when we have both income and bills data
   const showHealthScore = data.income && data.totalBill && data.hasBills;
+  const shouldShowBudgetFlow = data.hasBills || data.income != null;
 
   return (
     <div className="gen-response-container">
@@ -62,6 +64,11 @@ export default function GenerativeResponse({ text, chartData }) {
           categoryData={data.categoryData}
           chartData={data.chartData}
         />
+      )}
+
+      {/* ─── Interactive Action Flows ─── */}
+      {shouldShowBudgetFlow && (
+        <GenerativeBudgetFlow />
       )}
     </div>
   );
