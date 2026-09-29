@@ -59,7 +59,7 @@ export default function GenerativeResponse({ text, chartData }) {
       )}
 
       {/* ─── Charts ─── */}
-      {(data.categoryData.length > 1 || data.chartData) && (
+      {data.chartData && (
         <FinancialCharts
           categoryData={data.categoryData}
           chartData={data.chartData}
