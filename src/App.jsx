@@ -210,7 +210,7 @@ function App() {
                 {/* Avatar */}
                 {msg.sender === 'bot' && (
                   <div className="msg-avatar bot-av">
-                    <User size={18} />
+                    <User size={18} color="#3b82f6" />
                   </div>
                 )}
 
