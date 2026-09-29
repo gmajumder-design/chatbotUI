@@ -6,11 +6,13 @@
 .app-shell {
   width: 100vw;
   height: 100vh;
+  height: 100dvh;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   position: relative;
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 /* Background Mesh Gradient */
@@ -41,13 +43,16 @@
   width: 100%;
   max-width: 720px;
   height: 100vh;
+  height: 100dvh;
   max-height: 100vh;
+  max-height: 100dvh;
   display: flex;
   flex-direction: column;
   background: rgba(10, 14, 26, 0.85);
   backdrop-filter: blur(40px);
   border-left: 1px solid var(--surface-border);
   border-right: 1px solid var(--surface-border);
+  margin: auto;
 }
 
 @media (min-width: 900px) {
