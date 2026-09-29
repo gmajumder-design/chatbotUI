@@ -54,7 +54,7 @@ function App() {
     setIsLoading(true);
 
     try {
-      const API_URL = import.meta.env.VITE_API_URL ?? '';
+      const CHAT_API_URL = 'https://jqncngtsmd.execute-api.us-east-1.amazonaws.com/prod/chat';
       
       const token = localStorage.getItem('token');
       // Use user_id from localStorage, fallback to the ID specified by the user
@@ -65,7 +65,7 @@ function App() {
         headers['Authorization'] = `Bearer ${token}`;
       }
 
-      const response = await fetch(`${API_URL}/chat`, {
+      const response = await fetch(CHAT_API_URL, {
         method: 'POST',
         headers,
         body: JSON.stringify({ 
