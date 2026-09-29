@@ -66,8 +66,8 @@ export function extractTotalBill(text) {
  */
 export function extractTDI(text) {
   if (!text) return null;
-  // Strictly match TDI amounts directly following the label
-  const tdiRegex = /(?:TDI|True\s+Discretionary\s+Income|discretionary\s+income)[\s:*-]*\$([0-9,.]+)/i;
+  // Various patterns for TDI. Restrict scan to 50 chars to avoid crossing sentences.
+  const tdiRegex = /(?:TDI|True\s+Discretionary\s+Income|discretionary\s+income)[^$.\n!?]{0,50}\$([0-9,.]+)/i;
   const match = tdiRegex.exec(text);
   if (match) return parseDollar(match[1]);
   return null;
@@ -78,8 +78,8 @@ export function extractTDI(text) {
  */
 export function extractIncome(text) {
   if (!text) return null;
-  // Strictly match income amounts directly following the label, not 50 words away
-  const incomeRegex = /(?:monthly\s+income|total\s+income|your\s+income|income\s+is)[\s:*-]*\$([0-9,.]+)/i;
+  // Restrict scan to avoid grabbing random numbers later in the text
+  const incomeRegex = /(?:monthly\s+income|total\s+income|your\s+income|income\s+is)[^$.\n!?]{0,50}\$([0-9,.]+)/i;
   const match = incomeRegex.exec(text);
   if (match) return parseDollar(match[1]);
   return null;
