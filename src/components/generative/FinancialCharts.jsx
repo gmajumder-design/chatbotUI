@@ -152,11 +152,34 @@ function SpendingBarChart({ data }) {
 export default function FinancialCharts({ categoryData, chartData }) {
   // If explicit chart_data from backend, render that
   if (chartData) {
+    // Format 1: Expected our custom ui_component format
     if (chartData.ui_component === 'pie_chart' && chartData.data) {
       return <SpendingPieChart data={chartData.data} />;
     }
     if (chartData.ui_component === 'bar_chart' && chartData.data) {
       return <SpendingBarChart data={chartData.data.map(d => ({ name: d.label || d.name, value: d.value }))} />;
+    }
+    
+    // Format 2: Chart.js style format the LLM actually generates { labels: [], datasets: [{data: []}] }
+    if (chartData.labels && chartData.datasets && chartData.datasets.length > 0) {
+      const mappedData = chartData.labels.map((label, index) => ({
+        name: label,
+        value: chartData.datasets[0].data[index] || 0
+      })).filter(d => d.value > 0).sort((a, b) => b.value - a.value);
+      
+      // Limit to top 10 for readability in pie chart
+      const topData = mappedData.slice(0, 10);
+      const otherValue = mappedData.slice(10).reduce((sum, item) => sum + item.value, 0);
+      if (otherValue > 0) {
+        topData.push({ name: 'Other', value: otherValue });
+      }
+
+      return (
+        <>
+          <SpendingPieChart data={topData} />
+          <SpendingBarChart data={topData} />
+        </>
+      );
     }
   }
 

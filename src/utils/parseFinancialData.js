@@ -22,22 +22,28 @@ export function extractBills(text) {
   if (!text) return [];
   const bills = [];
 
-  // Pattern: * **Name** (Category): **$Amount** due **Date** (Status)
-  // Also handles variations without category or status
-  const billRegex = /\*\s*\*\*(.+?)\*\*\s*(?:\(([^)]+)\))?\s*:?\s*\*\*\$([0-9,.]+)\*\*(?:\s*(?:due|–|—|-)\s*\*\*([^*]+)\*\*)?(?:\s*\((\w[\w\s]*)\))?/gi;
+  // Match both formatted and unformatted bills:
+  // "Freedom Mortgage: $2,094.68 (20.2% of income)"
+  // "* **Freedom Mortgage**: **$2,094.68**"
+  const billRegex = /[*]*\s*[*]*([a-zA-Z\s]+?)[*]*\s*:\s*[*]*\$([0-9,.]+)[*]*(?:\s+due\s+([^*]+))?(?:\s*\(([^)]+)\))?/gi;
   let match;
 
   while ((match = billRegex.exec(text)) !== null) {
     const name = match[1].trim();
-    const category = match[2]?.trim() || '';
-    const amount = parseDollar(match[3]);
-    const dueDate = match[4]?.trim() || '';
-    const status = match[5]?.trim()?.toUpperCase() || '';
+    const amount = parseDollar(match[2]);
+    const dueDate = match[3]?.trim() || '';
+    
+    // The paren text could be "(PAID)" or "(20% of income)". Try to extract status if it exists.
+    const parenText = match[4]?.trim()?.toUpperCase() || '';
+    let status = '';
+    if (parenText === 'PAID' || parenText === 'DUE' || parenText === 'OVERDUE') {
+      status = parenText;
+    }
 
-    // Skip if this looks like a total line
-    if (name.toLowerCase().includes('total')) continue;
+    // Skip if this looks like a total line or analysis section
+    if (name.toLowerCase().includes('total') || name.toLowerCase().includes('analysis') || name.toLowerCase().includes('action plan')) continue;
 
-    bills.push({ name, category, amount, dueDate, status });
+    bills.push({ name, amount, dueDate, status, category: 'Other' });
   }
 
   return bills;
