@@ -56,9 +56,10 @@ function App() {
     try {
       const CHAT_API_URL = 'https://jqncngtsmd.execute-api.us-east-1.amazonaws.com/prod/chat';
       
-      const token = localStorage.getItem('token');
-      // Use user_id from localStorage, fallback to the ID specified by the user
-      const userId = localStorage.getItem('user_id');
+      const urlParams = new URLSearchParams(window.location.search);
+      const token = urlParams.get('token') || localStorage.getItem('token');
+      // Use user_id from URL, then localStorage, then fallback
+      const userId = urlParams.get('userId') || localStorage.getItem('user_id') || 'f49183e7-08f4-46db-9a8e-4069b0ee1850';
       
       const headers = { 'Content-Type': 'application/json' };
       if (token) {
