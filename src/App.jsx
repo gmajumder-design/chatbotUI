@@ -55,12 +55,12 @@ function App() {
 
     try {
       const CHAT_API_URL = 'https://jqncngtsmd.execute-api.us-east-1.amazonaws.com/prod/chat';
-      
+
       const urlParams = new URLSearchParams(window.location.search);
       const token = urlParams.get('token') || localStorage.getItem('token');
-      // Use user_id from URL, then localStorage, then fallback
-      const userId = urlParams.get('userId') || localStorage.getItem('user_id') || 'f49183e7-08f4-46db-9a8e-4069b0ee1850';
-      
+      // Catch the dynamic ID passed by true-harbor-ui (checking all possible casings/names)
+      const userId = urlParams.get('userId') || urlParams.get('user_id') || urlParams.get('employeeId') || localStorage.getItem('user_id');
+
       const headers = { 'Content-Type': 'application/json' };
       if (token) {
         headers['Authorization'] = `Bearer ${token}`;
@@ -69,7 +69,7 @@ function App() {
       const response = await fetch(CHAT_API_URL, {
         method: 'POST',
         headers,
-        body: JSON.stringify({ 
+        body: JSON.stringify({
           message: text.trim(),
           user_id: userId
         })
