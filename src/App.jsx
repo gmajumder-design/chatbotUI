@@ -183,7 +183,7 @@ function App() {
               <h1 className="header-title">TakeHome Assistant</h1>
               <div className="header-status">
                 <div className="status-indicator" />
-                <span>AI-Powered Financial Intelligence</span>
+                <span>Online</span>
               </div>
             </div>
           </div>
@@ -210,7 +210,7 @@ function App() {
                 {/* Avatar */}
                 {msg.sender === 'bot' && (
                   <div className="msg-avatar bot-av">
-                    <Bot size={18} />
+                    <User size={18} />
                   </div>
                 )}
 
