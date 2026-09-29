@@ -231,9 +231,9 @@
 }
 
 .bot-av {
-  background: rgba(59, 130, 246, 0.1);
-  border: 1px solid rgba(59, 130, 246, 0.15);
-  color: var(--accent-blue);
+  background: #ef4444; /* solid red */
+  border: none;
+  color: #ffffff;
 }
 
 .user-av {
