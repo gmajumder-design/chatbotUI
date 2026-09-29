@@ -1219,3 +1219,185 @@
 .recharts-tooltip-item {
   color: var(--text-secondary) !important;
 }
+
+/* ─── Generative Budget Flow Custom Styles ─── */
+.gen-action-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 12px;
+  margin-top: 16px;
+  background: var(--bg-glass);
+  border: 1px solid var(--surface-border);
+  border-radius: 12px;
+  color: var(--accent-emerald);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.gen-action-button:hover {
+  background: var(--bg-glass-hover);
+  border-color: var(--accent-emerald);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px var(--accent-emerald-glow);
+}
+
+.budget-flow-card {
+  margin-top: 16px;
+  border-top: 1px solid var(--surface-border);
+  padding-top: 12px;
+}
+
+.budget-success-view {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+  text-align: center;
+}
+
+.budget-success-icon {
+  color: var(--accent-emerald);
+  margin-bottom: 12px;
+}
+
+.budget-success-title {
+  color: var(--text-primary);
+  font-weight: 500;
+  font-size: 1.1rem;
+  margin: 0 0 4px 0;
+}
+
+.budget-success-desc {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+.budget-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 12px;
+}
+
+.budget-form-row {
+  display: flex;
+  gap: 16px;
+}
+
+.budget-form-row > * {
+  flex: 1;
+}
+
+.budget-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.budget-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-tertiary);
+  font-weight: 600;
+}
+
+.budget-input,
+.budget-select {
+  width: 100%;
+  background: var(--bg-glass);
+  border: 1px solid var(--surface-border);
+  border-radius: 8px;
+  padding: 8px 12px;
+  color: var(--text-primary);
+  font-size: 0.85rem;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+.budget-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2364748b'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+  background-position: right 10px center;
+  background-repeat: no-repeat;
+  background-size: 14px;
+  padding-right: 30px;
+}
+
+.budget-select option {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+.budget-input:focus,
+.budget-select:focus {
+  outline: none;
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 0 1px var(--accent-blue);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.budget-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.budget-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+.budget-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.budget-btn-primary {
+  background: var(--gradient-blue);
+  color: white;
+  box-shadow: 0 4px 12px var(--accent-blue-glow);
+}
+
+.budget-btn-primary:hover:not(:disabled) {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.budget-btn-secondary {
+  background: var(--bg-glass);
+  border: 1px solid var(--surface-border);
+  color: var(--text-secondary);
+}
+
+.budget-btn-secondary:hover:not(:disabled) {
+  background: var(--bg-glass-hover);
+  color: var(--text-primary);
+}
+
+.btn-spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}

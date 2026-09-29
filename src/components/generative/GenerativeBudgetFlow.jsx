@@ -98,60 +98,59 @@ export default function GenerativeBudgetFlow() {
 
   return (
     <motion.div 
-      className="gen-chart-card mt-4"
+      className="gen-chart-card budget-flow-card"
       initial={{ opacity: 0, height: 0 }}
       animate={{ opacity: 1, height: 'auto' }}
       exit={{ opacity: 0, height: 0 }}
     >
       <div className="gen-section-header">
         <div className="gen-section-header-left">
-           <Plus size={16} style={{ color: 'var(--accent-green)' }} />
+           <Plus size={16} style={{ color: 'var(--accent-emerald)' }} />
            <span className="gen-section-title">Configure Budget</span>
         </div>
       </div>
       
       <div className="gen-chart-body">
         {isSuccess ? (
-          <div className="flex flex-col items-center justify-center py-6 text-center">
+          <div className="budget-success-view">
             <motion.div 
               initial={{ scale: 0 }} 
               animate={{ scale: 1 }} 
-              className="text-green-400 mb-3"
+              className="budget-success-icon"
             >
               <CheckCircle2 size={48} />
             </motion.div>
-            <h3 className="text-white font-medium text-lg">Budget Created!</h3>
-            <p className="text-gray-400 text-sm mt-1">Your new budget has been synced to True Harbor.</p>
+            <h3 className="budget-success-title">Budget Created!</h3>
+            <p className="budget-success-desc">Your new budget has been synced to True Harbor.</p>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="flex flex-col gap-4 mt-2">
-            <div>
-              <label className="block text-xs uppercase tracking-wider text-gray-500 font-semibold mb-1.5">Budget Name</label>
+          <form onSubmit={handleSubmit} className="budget-form">
+            <div className="budget-form-group">
+              <label className="budget-label">Budget Name</label>
               <input 
                 type="text"
                 value={name}
                 onChange={e => setName(e.target.value)}
                 placeholder="e.g. Dining Out"
                 required
-                className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
+                className="budget-input"
               />
             </div>
             
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block text-xs uppercase tracking-wider text-gray-500 font-semibold mb-1.5">Category</label>
+            <div className="budget-form-row">
+              <div className="budget-form-group">
+                <label className="budget-label">Category</label>
                 <select
                   value={category}
                   onChange={e => setCategory(e.target.value)}
-                  className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all appearance-none"
-                  style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' fill=\'none\' viewBox=\'0 0 24 24\' stroke=\'%239ca3af\'%3E%3Cpath stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'2\' d=\'M19 9l-7 7-7-7\'%3E%3C/path%3E%3C/svg%3E")', backgroundPosition: 'right 0.5rem center', backgroundRepeat: 'no-repeat', backgroundSize: '1.5em 1.5em', paddingRight: '2.5rem' }}
+                  className="budget-select"
                 >
-                  {CATEGORIES.map(c => <option key={c.value} value={c.value} className="bg-gray-900">{c.label}</option>)}
+                  {CATEGORIES.map(c => <option key={c.value} value={c.value}>{c.label}</option>)}
                 </select>
               </div>
               
-              <div>
-                <label className="block text-xs uppercase tracking-wider text-gray-500 font-semibold mb-1.5">Amount ($)</label>
+              <div className="budget-form-group">
+                <label className="budget-label">Amount ($)</label>
                 <input 
                   type="number"
                   min="1"
@@ -160,24 +159,24 @@ export default function GenerativeBudgetFlow() {
                   onChange={e => setAmount(e.target.value)}
                   placeholder="0.00"
                   required
-                  className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
+                  className="budget-input"
                 />
               </div>
             </div>
 
-            <div className="flex gap-3 mt-2">
+            <div className="budget-actions">
               <button 
                 type="submit" 
                 disabled={isSubmitting}
-                className="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-medium py-2.5 rounded-lg flex justify-center items-center transition-colors shadow-lg shadow-indigo-900/20"
+                className="budget-btn budget-btn-primary"
               >
-                {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : "Save Budget"}
+                {isSubmitting ? <Loader2 className="btn-spinner" size={16} /> : "Save Budget"}
               </button>
               <button 
                 type="button"
                 onClick={() => setIsOpen(false)}
                 disabled={isSubmitting}
-                className="flex-1 bg-white/5 border border-white/10 hover:bg-white/10 text-gray-300 text-sm font-medium py-2.5 rounded-lg transition-colors"
+                className="budget-btn budget-btn-secondary"
               >
                 Cancel
               </button>
