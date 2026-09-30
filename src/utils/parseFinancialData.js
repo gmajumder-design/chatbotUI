@@ -42,7 +42,18 @@ export function extractBills(text) {
     }
 
     // Skip if this looks like a total line or analysis section
-    if (name.toLowerCase().includes('total') || name.toLowerCase().includes('analysis') || name.toLowerCase().includes('action plan')) continue;
+    const lowerName = name.toLowerCase();
+    if (
+      lowerName.includes('total') || 
+      lowerName.includes('analysis') || 
+      lowerName.includes('action plan') ||
+      lowerName.includes('potential savings') ||
+      lowerName.includes('savings') ||
+      lowerName.includes('average') ||
+      lowerName.includes('previous')
+    ) {
+      continue;
+    }
 
     bills.push({ name, amount, dueDate, status, category: 'Other' });
   }
