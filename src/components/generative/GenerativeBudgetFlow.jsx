@@ -3,14 +3,14 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, Loader2, CheckCircle2 } from 'lucide-react';
 
 const CATEGORIES = [
-  { value: "housing", label: "Housing & Rent" },
-  { value: "food", label: "Food & Groceries" },
-  { value: "transportation", label: "Transportation" },
-  { value: "utilities", label: "Utilities & Bills" },
-  { value: "entertainment", label: "Entertainment" },
-  { value: "health", label: "Healthcare" },
-  { value: "shopping", label: "Shopping" },
-  { value: "other", label: "Other" }
+  { value: "RENT_AND_UTILITIES", label: "Housing & Rent" },
+  { value: "FOOD_AND_DRINK", label: "Food & Groceries" },
+  { value: "TRANSPORTATION", label: "Transportation" },
+  { value: "GENERAL_SERVICES", label: "Utilities & Bills" },
+  { value: "ENTERTAINMENT", label: "Entertainment" },
+  { value: "MEDICAL", label: "Healthcare" },
+  { value: "GENERAL_MERCHANDISE", label: "Shopping" },
+  { value: "PERSONAL_CARE", label: "Personal Care" }
 ];
 
 export default function GenerativeBudgetFlow() {
@@ -20,7 +20,7 @@ export default function GenerativeBudgetFlow() {
 
   const [name, setName] = useState("");
   const [amount, setAmount] = useState("");
-  const [category, setCategory] = useState("utilities");
+  const [category, setCategory] = useState("RENT_AND_UTILITIES");
   const [frequency, setFrequency] = useState("monthly");
 
   const handleSubmit = async (e) => {
