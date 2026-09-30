@@ -299,7 +299,7 @@ function App() {
                 transition={{ duration: 0.3 }}
               >
                 <div className="msg-avatar bot-av">
-                  <Bot size={18} />
+                  <User size={18} />
                 </div>
                 <div className="msg-content bot">
                   <div className="msg-bubble bot loading-bubble">
